@@ -3,6 +3,12 @@
 
 Tomato Brown Rugose Fruit Virus (ToBRFV) is a highly virulent virus that affects tomato and pepper plants, causing significant agricultural losses. The ToBRFV Mexican isolate is a specific strain of the virus identified in Mexico, known for its impact on local tomato crops. Understanding the phylogenetic relationships of this isolate with other species is crucial for developing effective management and control strategies.
 
+We performed a comprehensive bioinformatic workflow to analyze the genome of the Mexican ToBRFV isolate. Each step was designed to provide detailed insights into the virus's genomic characteristics and its spread. The overall process is illustrated in Fig. 1. 
+
+![ToBRFV_Bioinformatics_Methodology_Flowchart](https://github.com/user-attachments/assets/43b3d5cf-6719-4a62-97f5-ae856ad377f4)
+
+
+
 ## Requirements
 
 Make sure you have the following packages installed:
