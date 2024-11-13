@@ -1,13 +1,77 @@
 # TOBRFV-Genome-Analyses
 ## Introduction
 
-Tomato Brown Rugose Fruit Virus (ToBRFV) is a highly virulent virus that affects tomato and pepper plants, causing significant agricultural losses. The ToBRFV Mexican isolate is a specific strain of the virus identified in Mexico, known for its impact on local tomato crops. Understanding the phylogenetic relationships of this isolate with other species is crucial for developing effective management and control strategies.
-
-We performed a comprehensive bioinformatic workflow to analyze the genome of the Mexican ToBRFV isolate. Each step was designed to provide detailed insights into the virus's genomic characteristics and its spread. The overall process is illustrated in Fig. 1. 
-
-![ToBRFV_Bioinformatics_Methodology_Flowchart](https://github.com/user-attachments/assets/43b3d5cf-6719-4a62-97f5-ae856ad377f4)
-
-
+This repository contains a comprehensive bioinformatics workflow for analyzing the genome of the Mexican isolate of Tomato Brown Rugose Fruit Virus (ToBRFV), a highly virulent virus affecting tomato and pepper plants. The workflow includes RNA sequencing, quality control, genome assembly, and a series of analytical steps aimed at understanding the genetic diversity, phylogeny, and geographical distribution of ToBRFV isolates. The complete pipeline and code are provided for replicability and further exploration.
+Sequencing and Analysis Workflow
+RNA was extracted using the CTAB2%-Trizol® protocol, and libraries were prepared through fragmentation and adapter ligation. Libraries were amplified, purified, and sequenced using Illumina’s Sequencing by Synthesis (SBS) technology. BCL format sequencing data was converted to FASTQ for downstream analysis, where quality control and adapter trimming were performed. The cleaned reads were assembled de novo using SPADES, optimized for contig number and N50. Assembly accuracy was validated by mapping reads back to the genome, ensuring precise genomic reconstruction.
+We then implemented a bioinformatics workflow for the Mexican ToBRFV isolate. The workflow includes genome retrieval, metadata extraction, genetic diversity calculations, phylogenetic modeling, and visualization. Figure 1 provides an overview of the analysis steps. All scripts used are accessible in this GitHub repository.
+Figure 1. Workflow
+The analysis pipeline includes:
+Sequence Retrieval: Retrieval of full genome sequences of 100 ToBRFV isolates from GenBank.
+Metadata Extraction: Extraction of geographical and host information for each isolate.
+Genetic Diversity Calculations: Pairwise identity, haplotype diversity, and polymorphic site calculations to quantify genetic diversity.
+Nucleotide Diversity (π) and Average Differences (k): Measurement of nucleotide diversity (π) and average nucleotide differences (k) across isolates.
+Alignment and Phylogenetic Modeling: Alignment with ClustalW, followed by IQ-TREE 2 phylogenetic modeling with 1000 bootstrap replicates.
+Phylogenetic Network and Tree Visualization: Visualization of relationships among isolates using Neighbor-Net and ggtree.
+Geographical Distribution Mapping: Mapping isolate regions using ggplot2 and sf to show distribution patterns.
+Genomic Variation Analysis: Identification of nucleotide differences and mutation hotspots.
+Bootstrapping and Alignment Scores Analysis: Calculation of alignment scores and scatter plot visualization by host and region.
+Phylogenetic Analysis
+To assess genetic relationships among isolates:
+101 ToBRFV genome sequences were aligned using ClustalW (in bash, with FASTA input).
+IQ-TREE2 was used for phylogenetic analysis, with Maximum Likelihood (ML) method and ModelFinder for optimal model selection.
+1000 ultrafast bootstrap replicates were applied for clade support.
+Visualization was done in R using ggtree, with pairwise sequence identity matrices generated using ape and visualized as heatmaps with pheatmap.
+A Neighbor-Net phylogenetic network was created to examine relationships among isolates.
+Key diversity metrics (haplotype diversity, haplotype count, nucleotide diversity, and average nucleotide differences) were calculated using pegas and ape, and compared visually with fmsb radar plots.
+Genomic Variation and Distribution Analysis of the Mexican ToBRFV Isolate
+Nucleotide Variation Analysis
+Using the Biostrings package in RStudio, we analyzed nucleotide differences between the Mexican ToBRFV isolate and 100 reference genomes. Normalization was applied to ensure consistent measurement, and statistical summaries highlighted mutation rate variation. Visualization was done in ggplot2, revealing unique mutations and conserved regions in the Mexican isolate with potential functional or evolutionary relevance.
+Geographical Distribution of ToBRFV Isolates
+Geographical metadata for each isolate was visualized using ggplot2 and sf in RStudio. A world map annotated with isolate counts highlighted the distribution and clustering of isolates genetically similar to the Mexican genome, illustrating global dissemination patterns.
+Alignment Scores by Host and Geographical Distribution
+To examine alignment score variation across hosts and regions, alignment scores were calculated with msa and combined with host and geographical data. ggplot2 was used to generate scatter plots, with points colored by host and annotated by region.
+Host-Specific Nucleotide Differences
+Nucleotide variations associated with different hosts were identified using Biostrings, linking genetic variation with host data. ggplot2 visualizations highlighted patterns along the genome, suggesting potential host-specific adaptations and evolutionary pressures.
+Requirements
+Ensure the following R packages are installed:
+ggtree
+treeio
+ape
+viridis
+ggplot2
+msa
+Biostrings
+stringr
+dplyr
+tidyr
+pheatmap
+phangorn
+fmsb
+sf
+Installation Command:
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+BiocManager::install(c("ggtree", "treeio", "msa", "Biostrings"))
+install.packages(c("ape", "viridis", "ggplot2", "stringr", "dplyr", "tidyr", "pheatmap", "phangorn", "fmsb", "sf"))
+Usage
+Phylogenetic Tree Generation
+Place the Newick tree file (TOBRFV.nwk) in the working directory.
+Run generate_phylogenetic_tree.R to generate the tree visualizations.
+Genomic Differences Visualization
+Place the FASTA file (lcl|Query_2456347.aln) in the working directory.
+Run visualize_genomic_differences.R for genome-wide difference visualizations.
+Genomic Differences by Host
+Place the FASTA file (lcl|Query_2456347.aln) in the working directory.
+Run GenomicDifferencesbyHost.R to analyze differences grouped by host.
+Scripts
+generate_phylogenetic_tree.R: Generates a phylogenetic tree with labeled clades, bootstrap values, and saves as PDF and PNG.
+visualize_genomic_differences.R: Visualizes genomic differences across the ToBRFV genome.
+GenomicDifferencesbyHost.R: Visualizes genomic differences categorized by host.
+Summary
+This repository offers a comprehensive workflow for analyzing ToBRFV’s genetic diversity, phylogenetic relationships, and geographical distribution patterns. It enables reproducible research and provides insights into the virus's transmission pathways, host adaptations, and global impact.
+This README provides a structured and comprehensive overview of the ToBRFV Genome Analysis workflow, guiding users through the setup, usage, and functionalities of the scripts in the repository.
 
 ## Requirements
 
