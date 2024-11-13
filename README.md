@@ -2,10 +2,10 @@ TOBRFV-Genome-Analyses
 
 Introduction
 
-This repository provides a complete bioinformatics workflow to analyze the genome of the Mexican isolate of Tomato Brown Rugose Fruit Virus (ToBRFV), a highly virulent virus impacting tomato and pepper plants. The pipeline includes sequence retrieval, quality control, genome assembly, and various analyses to investigate the genetic diversity, phylogeny, and geographical distribution of ToBRFV isolates. This project is designed for reproducibility and further exploration, with all scripts available in this repository.
-The workflow includes genome retrieval, metadata extraction, genetic diversity calculations, phylogenetic modeling, and visualization to uncover relationships and variations within ToBRFV isolates.
+This repository provides a comprehensive bioinformatics workflow for analyzing the genome of the Mexican isolate of Tomato Brown Rugose Fruit Virus (ToBRFV), a highly virulent virus affecting tomato and pepper plants. The workflow includes sequence retrieval, quality control, genome assembly, and analyses aimed at understanding the genetic diversity, phylogeny, and geographical distribution of ToBRFV isolates. This project is designed for reproducibility, with all scripts available in this repository.
+The analysis pipeline includes genome retrieval, metadata extraction, genetic diversity calculations, phylogenetic modeling, and visualization to explore relationships and variations within ToBRFV isolates.
 
-Figure 1 below illustrates the analysis steps, with all scripts accessible in this repository.
+**Figure 1** below illustrates the analysis steps, with all scripts accessible in this repository.
 
 
 
@@ -60,6 +60,7 @@ pheatmap
 phangorn
 fmsb
 sf
+
 Install them using the following commands:
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
   install.packages("BiocManager")
