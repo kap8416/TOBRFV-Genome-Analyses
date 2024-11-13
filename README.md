@@ -1,10 +1,21 @@
-#TOBRFV-Genome-Analyses
+TOBRFV-Genome-Analyses
 
 Introduction
 
 This repository provides a complete bioinformatics workflow to analyze the genome of the Mexican isolate of Tomato Brown Rugose Fruit Virus (ToBRFV), a highly virulent virus impacting tomato and pepper plants. The pipeline includes sequence retrieval, quality control, genome assembly, and various analyses to investigate the genetic diversity, phylogeny, and geographical distribution of ToBRFV isolates. This project is designed for reproducibility and further exploration, with all scripts available in this repository.
 The workflow includes genome retrieval, metadata extraction, genetic diversity calculations, phylogenetic modeling, and visualization to uncover relationships and variations within ToBRFV isolates.
+
 Figure 1 below illustrates the analysis steps, with all scripts accessible in this repository.
+
+
+
+
+![output-9](https://github.com/user-attachments/assets/2c1938a2-6643-4d31-9780-73d232f3f748)
+
+
+
+
+
 Analysis Pipeline Overview
 
 Sequence Retrieval: Retrieve the full genome sequences of 100 ToBRFV isolates from GenBank, including the Mexican isolate.
