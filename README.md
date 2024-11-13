@@ -2,10 +2,13 @@
 ## Introduction
 
 This repository contains a comprehensive bioinformatics workflow for analyzing the genome of the Mexican isolate of Tomato Brown Rugose Fruit Virus (ToBRFV), a highly virulent virus affecting tomato and pepper plants. The workflow includes RNA sequencing, quality control, genome assembly, and a series of analytical steps aimed at understanding the genetic diversity, phylogeny, and geographical distribution of ToBRFV isolates. The complete pipeline and code are provided for replicability and further exploration.
-Sequencing and Analysis Workflow
-RNA was extracted using the CTAB2%-Trizol® protocol, and libraries were prepared through fragmentation and adapter ligation. Libraries were amplified, purified, and sequenced using Illumina’s Sequencing by Synthesis (SBS) technology. BCL format sequencing data was converted to FASTQ for downstream analysis, where quality control and adapter trimming were performed. The cleaned reads were assembled de novo using SPADES, optimized for contig number and N50. Assembly accuracy was validated by mapping reads back to the genome, ensuring precise genomic reconstruction.
+
 We then implemented a bioinformatics workflow for the Mexican ToBRFV isolate. The workflow includes genome retrieval, metadata extraction, genetic diversity calculations, phylogenetic modeling, and visualization. Figure 1 provides an overview of the analysis steps. All scripts used are accessible in this GitHub repository.
+
 Figure 1. Workflow
+![output-9](https://github.com/user-attachments/assets/0dfde311-73c6-4986-a50e-4aac691a96a6)
+
+
 The analysis pipeline includes:
 Sequence Retrieval: Retrieval of full genome sequences of 100 ToBRFV isolates from GenBank.
 Metadata Extraction: Extraction of geographical and host information for each isolate.
