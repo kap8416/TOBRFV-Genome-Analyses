@@ -86,15 +86,14 @@ install.packages(c("ape", "viridis", "ggplot2", "stringr", "dplyr", "tidyr", "ph
 ---
 ## Usage
 
-
-
 Phylogenetic Tree Generation
-Ensure the Newick tree file (Resultado_Alignment.aln.contree) is in the working directory.
-Run generate_phylogenetic_tree.R to generate the tree visualization, which will produce outputs in both PDF and PNG formats with clade support values.
+-Ensure the Newick tree file (Resultado_Alignment.aln.contree) is in the working directory.
+-Run generate_phylogenetic_tree.R to generate the tree visualization, which will produce outputs in both PDF and PNG formats with clade support values.
+
 Genomic Differences Visualization
 Place the aligned FASTA file (lcl|Query_2456347.aln) in the working directory.
 Run visualize_genomic_differences.R to create visualizations of genome-wide nucleotide differences.
-Genomic Differences by Host
+-Genomic Differences by Host
 Place the aligned FASTA file (lcl|Query_2456347.aln) in the working directory.
 Run GenomicDifferencesbyHost.R to analyze and visualize nucleotide differences grouped by host.
 ---
