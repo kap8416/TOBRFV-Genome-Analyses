@@ -60,16 +60,14 @@ install.packages(c("ape", "viridis", "ggplot2", "stringr", "dplyr", "tidyr", "ph
 Usage
 
 Phylogenetic Tree Generation
-Ensure the aligned sequences are saved as a Newick tree file (Resultado_Alignment.aln.contree) in the working directory.
-Run generate_phylogenetic_tree.R to generate the phylogenetic tree visualization. This script will produce outputs in both PDF and PNG formats, displaying clade support values and branch length colors.
+Place the Newick tree file (TOBRFV.nwk) in the working directory.
+Run generate_phylogenetic_tree.R to generate the tree visualization.
 Genomic Differences Visualization
-Place the aligned FASTA file (lcl|Query_2456347.aln) in the working directory.
-Run visualize_genomic_differences.R to create visualizations of genome-wide nucleotide differences for the ToBRFV isolates. This script will generate a scatter plot indicating positions with significant variations.
+Place the FASTA file (lcl|Query_2456347.aln) in the working directory.
+Run visualize_genomic_differences.R for genome-wide difference visualizations.
 Genomic Differences by Host
-Place the aligned FASTA file (lcl|Query_2456347.aln) in the working directory.
-Run GenomicDifferencesbyHost.R to analyze and visualize nucleotide differences grouped by host. The script will produce a plot highlighting host-specific genetic variations across the genome.
-
-
+Place the FASTA file (lcl|Query_2456347.aln) in the working directory.
+Run GenomicDifferencesbyHost.R to analyze nucleotide differences grouped by host.
 Scripts
 
 generate_phylogenetic_tree.R: Generates a phylogenetic tree with labeled clades, bootstrap values, and saves the visualization as PDF and PNG.
