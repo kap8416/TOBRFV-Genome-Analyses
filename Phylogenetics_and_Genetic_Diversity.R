@@ -81,20 +81,32 @@ dev.off()
 # ==========================
 # Neighbor-Net Network
 # ==========================
+alignment <- read.dna("/Users/katiaavinapadilla/Desktop/SECUENCIASDEPSOMAGENERIKA/lcl|Query_2456347.aln", format = "fasta")
+#Calculate the Distance Matrix
+#We will use the Kimura 2-parameter model (K80) to compute the distance matrix between sequences.
 dist_matrix <- dist.dna(alignment, model = "K80")
+#Construct the Neighbor-Net Network
+#Using the calculated distance matrix, you can construct a Neighbor-Net network using the phangorn package.
 net <- neighborNet(dist_matrix)
 
-# Simplify labels
-net$tip.label <- sapply(net$tip.label, function(label) {
+
+#Review and Extract the Exact Identifier
+
+#Extract the specific identifier after the first '|'
+labels <- sapply(net$tip.label, function(label) {
   match <- regmatches(label, regexpr("(?<=\\|)[^|]+(?=\\|)", label, perl = TRUE))
-  if (length(match) > 0) return(match) else return(label)
+  if (length(match) > 0) {
+    return(match)  
+  } else {
+    return(label)  # If no match is found, return the original label
+  }
 })
 
-# Plot the network
+# Assign the corrected labels to the network
+net$tip.label <- labels
 plot(net, tip.color = ifelse(net$tip.label == "Mexican_isolate", "red", "black"))
-pdf("Neighbor_Net_ToBRFV.pdf", width = 12, height = 8)
+# Plot the network
 plot(net)
-dev.off()
 
 # ==========================
 # Genetic Diversity Metrics and Radar Plot
@@ -128,3 +140,4 @@ title(main = "Genetic Diversity Parameters of ToBRFV")
 # ==========================
 # End of Script
 # ==========================
+
