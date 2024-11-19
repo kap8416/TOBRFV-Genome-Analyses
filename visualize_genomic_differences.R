@@ -14,6 +14,8 @@ alignment <- readDNAStringSet("lcl|Query_2456347.aln", format = "fasta")
 
 # Extract the sequence names
 seq_names <- names(alignment)
+# Display the sequence names in the file
+print(seq_names)
 
 # Align the sequences using 'msa'
 aligned <- msa(alignment, method = "ClustalW")
@@ -21,10 +23,10 @@ aligned <- msa(alignment, method = "ClustalW")
 # Convert the alignment to a character matrix
 aligned_matrix <- as.matrix(aligned)
 
-# Identify the sequence of interest (lcl|Query_2456347)
-query_index <- which(seq_names == "lcl|Query_2456347")
+# Identify the sequence of interest (|Mexican_isolate|)
+query_index <- which(seq_names == "|Mexican_isolate| ")
 if (length(query_index) == 0) {
-  stop("The sequence of interest 'lcl|Query_2456347' was not found in the alignment file.")
+  stop("The sequence of interest '|Mexican_isolate|' was not found in the alignment file.")
 }
 
 query_seq <- aligned_matrix[query_index, ]
