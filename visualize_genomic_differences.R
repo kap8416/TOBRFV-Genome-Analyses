@@ -1,110 +1,81 @@
-# Install and load necessary packages
-if (!requireNamespace("msa", quietly = TRUE)) install.packages("msa")
-if (!requireNamespace("Biostrings", quietly = TRUE)) BiocManager::install("Biostrings")
-if (!requireNamespace("stringr", quietly = TRUE)) install.packages("stringr")
-if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
-if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
-if (!requireNamespace("tidyr", quietly = TRUE)) install.packages("tidyr")
-if (!requireNamespace("viridis", quietly = TRUE)) install.packages("viridis")
+# Install and load required libraries
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install("Biostrings")
+BiocManager::install("msa")
+install.packages("ggplot2")
+install.packages("viridis")
 
-library(msa)
 library(Biostrings)
-library(stringr)
+library(msa)
 library(ggplot2)
-library(dplyr)
-library(tidyr)
 library(viridis)
-
-# Change the working directory to where the file is located, if necessary
-setwd("/Users/katiaavinapadilla/Downloads")
+library(viridisLite)
+setwd("/Users/katiaavinapadilla/Desktop/SECUENCIASDEPSOMAGENERIKA/")
 
 # Read the FASTA file
-alignment <- readDNAStringSet("lcl|Query_2456347.aln", format="fasta")
+alignment <- readDNAStringSet("lcl|Query_2456347.aln", format = "fasta")
 
-# Perform the alignment
-aligned <- msa(alignment, method = "ClustalW")
-#Asegurar que los nombres de las columnas sean válidos
-colnames(aligned_df) <- paste0("V", seq_len(ncol(aligned_df)))
-
-# Extraer nombres de secuencias
+# Extract sequence names
 seq_names <- names(alignment)
 
-# Verificar la extracción de los nombres de secuencias
-print(seq_names)
+# Align sequences using 'msa'
+aligned <- msa(alignment, method = "ClustalW")
+aligned_matrix <- as.matrix(aligned)
 
-# Extraer información de hospedantes
-host_regex <- "\\[nat_host=([A-Za-z ]+)\\]"
-hosts <- str_extract(seq_names, host_regex)
-hosts <- str_replace_all(hosts, "\\[nat_host=|\\]", "")
-hosts[hosts == "tomato"] <- "Solanum lycopersicum"
-
-# Verificar la extracción de hospedantes
-print(hosts)
-
-# Asegurar que ambos vectores tengan la misma longitud
-if (length(seq_names) != length(hosts)) {
-  missing_count <- length(seq_names) - length(hosts)
-  hosts <- c(hosts, rep("Unknown", missing_count))
+# Identify the sequence of interest
+query_index <- which(seq_names == "lcl|Query_2456347")
+if (length(query_index) == 0) {
+  stop("The sequence of interest 'lcl|Query_2456347' was not found in the alignment file.")
 }
 
-# Crear un data frame con los nombres de secuencias y sus respectivos hospedantes
-host_data <- data.frame(Sequence = seq_names, Host = hosts, stringsAsFactors = FALSE)
+query_seq <- aligned_matrix[query_index, ]
 
-# Combinar datos de alineación con información de hospedantes
-combined_data <- cbind(aligned_df, host_data)
+# Calculate differences using vectorized operations
+differences <- colSums(aligned_matrix != query_seq)
 
-# Identificar posiciones con diferencias
-diff_positions <- sapply(1:ncol(aligned_df), function(i) {
-  length(unique(aligned_df[, i])) > 1
-})
+# Normalize differences
+max_differences <- max(differences)
+if (max_differences > 0) {
+  differences <- differences / max_differences
+} else {
+  stop("No differences to normalize.")
+}
 
-# Verificar las posiciones con diferencias
-print(diff_positions)
+# Create a data frame for ggplot
+data <- data.frame(
+  Position = 1:ncol(aligned_matrix),
+  Differences = differences
+)
 
-# Extraer posiciones con diferencias
-diff_positions <- which(diff_positions)
-
-# Verificar las posiciones con diferencias extraídas
-print(diff_positions)
-
-# Filtrar datos combinados para incluir solo posiciones con diferencias
-filtered_data <- combined_data[, c(diff_positions, ncol(combined_data))]
-
-# Verificar los datos filtrados
-print(head(filtered_data))
-
-# Transformar datos para visualización
-plot_data <- filtered_data %>%
-  pivot_longer(cols = -Host, names_to = "Position", values_to = "Nucleotide") %>%
-  mutate(Position = as.numeric(gsub("V", "", Position))) %>%
-  filter(!is.na(Position))
-
-# Verificar los datos transformados para visualización
-print(head(plot_data))
-
-# Calcular diferencias normalizadas
-plot_data <- plot_data %>%
-  group_by(Position, Host) %>%
-  summarize(Differences = n_distinct(Nucleotide)) %>%
-  ungroup() %>%
-  mutate(Differences = scale(Differences))
-
-# Verificar los datos calculados
-print(head(plot_data))
-
-# Guardar los datos de diferencias en un archivo CSV
-write.csv(plot_data, file = "genomic_differences_by_host.csv", row.names = FALSE)
-
-# Crear gráfico de dispersión
-p <- ggplot(plot_data, aes(x = Position, y = Differences, color = Host)) +
-  geom_point(size = 3) +
-  scale_color_viridis(discrete = TRUE) +
-  labs(title = "Genomic Differences of ToBRFV Grouped by Host",
+# Create the plot
+p <- ggplot(data, aes(x = Position, y = Differences, color = Differences)) +
+  geom_point(size = 1.5) +
+  geom_hline(yintercept = 0.5, linetype = "dashed", color = "red") +
+  scale_color_viridis(option = "viridis") +
+  labs(title = "Genomic Differences of ToBRFV Compared to 100 Species",
        x = "Nucleotide Position",
-       y = "Normalized Differences",
-       color = "Host") +
+       y = "Normalized Differences") +
   theme_minimal(base_size = 15) +
-  theme(legend.position = "right")
+  theme(
+    legend.position = "right",
+    plot.title = element_text(hjust = 0.5)
+  )
 
+# Save the figure
+ggsave("ToBRFV_Genomic_Differences.png", plot = p, width = 15, height = 8, dpi = 300)
+
+# Display the figure
 print(p)
-Verificacio
+
+# Select the 5 positions with the highest differences
+top_5_points <- data %>% arrange(desc(Differences)) %>% head(5)
+print(top_5_points)
+
+# Add labels to the plot
+p <- p + 
+  geom_text(data = top_5_points, aes(x = Position, y = Differences, label = Position), 
+            vjust = -1, size = 4)
+
+# Display the final plot with labels
+print(p)
